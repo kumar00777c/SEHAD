@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Case | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <main class="new-case-page">
+
+        <section class="new-case-card">
+
+            <div class="new-case-icon">
+                🩺
+            </div>
+
+            <span class="small-label">
+                NEW CONSULTATION
+            </span>
+
+            <h1>
+                Let's understand what you're experiencing.
+            </h1>
+
+            <p>
+                SEHAD will guide you through a few questions
+                about your health concern. You can answer using
+                text or your voice.
+            </p>
+
+            <div class="case-method-selection">
+
+    <button class="method-card" data-method="text" type="button">
+        <div class="method-icon">⌨</div>
+
+        <div>
+            <h3>Text</h3>
+            <p>Type your responses.</p>
+        </div>
+    </button>
+
+
+    <button class="method-card" data-method="voice" type="button">
+        <div class="method-icon">🎙</div>
+
+        <div>
+            <h3>Voice</h3>
+            <p>Speak your responses.</p>
+        </div>
+    </button>
+
+</div>
+
+            <button
+             id="beginCaseButton"
+             class="primary-button new-case-button"
+             type="button"
+             disabled
+            >
+             Continue
+         <span>→</span>
+            </button>
+
+            <button
+                class="back-button"
+                onclick="window.location.href='../index.html'"
+            >
+                ← Back to Dashboard
+            </button>
+
+        </section>
+
+    </main>
+
+    <script>
+    const methodCards = document.querySelectorAll(".method-card");
+    const beginCaseButton = document.getElementById("beginCaseButton");
+
+    let selectedMethod = null;
+
+    methodCards.forEach(card => {
+        card.addEventListener("click", () => {
+
+            methodCards.forEach(item => {
+                item.classList.remove("selected");
+            });
+
+            card.classList.add("selected");
+
+            selectedMethod = card.dataset.method;
+
+            beginCaseButton.disabled = false;
+        });
+    });
+
+    beginCaseButton.addEventListener("click", () => {
+
+        if (!selectedMethod) return;
+
+        if (selectedMethod === "text") {
+            window.location.href = "/pages/case-text.html";
+        }
+
+        if (selectedMethod === "voice") {
+            window.location.href = "/pages/case-voice.html";
+        }
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Log In | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <!-- Branding -->
+            <div class="auth-brand">
+                <div class="auth-logo">S</div>
+
+                <div>
+                    <h1>SEHAD</h1>
+                    <p>Smart Electronic Health Assessment & Documentation</p>
+                </div>
+            </div>
+
+
+            <!-- Heading -->
+            <div class="auth-heading">
+                <h2>Welcome back</h2>
+                <p>Log in to continue managing your health information.</p>
+            </div>
+
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form">
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+
+                <!-- Message -->
+                <div id="authMessage" class="auth-message"></div>
+
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="auth-button"
+                >
+                    Log In
+                </button>
+
+            </form>
+
+
+            <!-- Signup Switch -->
+            <div class="auth-switch">
+                Don't have an account?
+                <a href="signup.html">Sign up</a>
+            </div>
+
+
+            <!-- Footer -->
+            <p class="auth-footer">
+                Your information is handled securely and used only for your SEHAD account.
+            </p>
+
+        </section>
+
+    </main>
+
+    <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const authMessage = document.getElementById("authMessage");
+
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        authMessage.textContent = "";
+        authMessage.className = "auth-message";
+
+        if (!email || !password) {
+            showMessage("Please enter your email and password.", "error");
+            return;
+        }
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Logging in...";
+
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                showMessage(
+                    data.message || "Unable to log in.",
+                    "error"
+                );
+
+                loginButton.disabled = false;
+                loginButton.textContent = "Log In";
+                return;
+            }
+
+            showMessage(
+                "Login successful! Redirecting...",
+                "success"
+            );
+
+            sessionStorage.setItem(
+    "sehad_user_name",
+    data.user.full_name || "Patient"
+);
+
+            setTimeout(() => {
+                window.location.href = "../index.html";
+            }, 800);
+
+        } catch (error) {
+            console.error("Login error:", error);
+
+            showMessage(
+                "Unable to connect to SEHAD. Please try again.",
+                "error"
+            );
+
+            loginButton.disabled = false;
+            loginButton.textContent = "Log In";
+        }
+    });
+
+    function showMessage(message, type) {
+        authMessage.textContent = message;
+        authMessage.className = `auth-message ${type}`;
+    }
+</script>
+
+</body>
+</html>

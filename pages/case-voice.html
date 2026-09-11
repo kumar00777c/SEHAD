@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Voice Case Taking | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <main class="voice-case-page">
+
+        <section class="voice-case-card">
+
+            <!-- Header -->
+            <div class="voice-header">
+
+                <div class="voice-header-icon">
+                    🩺
+                </div>
+
+                <div>
+                    <span class="small-label">
+                        SEHAD CASE TAKING
+                    </span>
+
+                    <h1>
+                        Tell us what you're experiencing
+                    </h1>
+                </div>
+
+            </div>
+
+
+            <!-- Progress -->
+            <div class="case-progress">
+
+                <div class="progress-info">
+                    <span id="questionNumber">Question 1 of 12</span>
+                    <span id="progressLabel">11 questions remaining</span>
+                </div>
+
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+
+            </div>
+
+
+            <!-- Question -->
+            <div class="voice-question">
+
+                <span class="question-label">
+                    SEHAD ASKS
+                </span>
+
+                <h2 id="caseQuestion">What brings you here today?</h2>
+
+                <p>
+                    Tell us about the main health concern
+                    that you would like to discuss.
+                </p>
+
+            </div>
+
+
+            <!-- Listening Status -->
+            <div id="voiceStatus" class="voice-status">
+                <span class="status-dot"></span>
+                <span id="statusText">Ready to listen</span>
+            </div>
+
+
+            <!-- Microphone -->
+            <button
+                id="micButton"
+                class="mic-button"
+                type="button"
+                aria-label="Start voice input"
+            >
+                <span class="mic-icon">🎙️</span>
+            </button>
+
+
+            <p class="mic-instruction" id="micInstruction">
+                Tap the microphone and speak naturally.
+            </p>
+
+
+            <!-- Transcript -->
+            <div class="transcript-section">
+
+                <div class="transcript-header">
+                    <span>Your response</span>
+
+                    <button
+                        id="clearTranscript"
+                        class="clear-button"
+                        type="button"
+                    >
+                        Clear
+                    </button>
+                </div>
+
+                <textarea
+                    id="transcript"
+                    placeholder="Your spoken response will appear here..."
+                    rows="5"
+                ></textarea>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="voice-actions">
+
+                <button
+                    id="backButton"
+                    class="secondary-button"
+                    type="button"
+                >
+                    ← Back
+                </button>
+
+                <button
+                    id="continueButton"
+                    class="primary-button"
+                    type="button"
+                    disabled
+                >
+                    Continue
+                    <span>→</span>
+                </button>
+
+            </div>
+
+
+            <!-- Browser Support Message -->
+            <div
+                id="browserMessage"
+                class="browser-message"
+                hidden
+            >
+                Voice input is not supported by this browser.
+                You can still enter your response using the text box above.
+            </div>
+
+            <div id="caseCompletion" class="case-completion" hidden>
+    <div class="completion-icon">✓</div>
+
+    <span class="small-label">CASE-TAKING COMPLETE</span>
+
+    <h2>You're ready for practitioner review</h2>
+
+    <p>
+        Your responses have been collected and organized.
+        You can now review your case summary before sharing it
+        with your practitioner.
+    </p>
+
+    <a href="health-summary.html" class="completion-button">
+        View Case Summary
+        <span>→</span>
+    </a>
+
+    <p class="completion-disclaimer">
+        SEHAD does not diagnose or prescribe treatment.
+        Your practitioner will make clinical decisions based on your case.
+    </p>
+</div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+const micButton = 
+    document.getElementById("micButton");
+
+const statusText = 
+    document.getElementById("statusText");
+
+const micInstruction = 
+    document.getElementById("micInstruction");
+
+const transcript = 
+    document.getElementById("transcript");
+
+const clearTranscript = 
+    document.getElementById("clearTranscript");
+
+const continueButton = 
+    document.getElementById("continueButton");
+
+const backButton = 
+    document.getElementById("backButton");
+
+const browserMessage = 
+    document.getElementById("browserMessage");
+
+const caseQuestion = 
+    document.getElementById("caseQuestion");
+
+const questionNumber =
+    document.getElementById("questionNumber");
+
+const progressLabel =
+    document.getElementById("progressLabel");
+
+const progressFill =
+    document.querySelector(".progress-fill");
+
+const caseCompletion =
+    document.getElementById("caseCompletion");
+
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+let recognition = null;
+let isListening = false;
+let isProcessing = false;
+let caseCompleted = false;
+const MAX_QUESTIONS = 12;
+let questionCount = 1;
+/*
+    Conversation history sent to SEHAD's AI engine.
+
+    The first message is SEHAD's opening question.
+*/
+let conversationHistory = [
+    {
+        role: "SEHAD",
+        content: "What brings you here today?"
+    }
+];
+
+
+/* =========================================================
+   SPEECH RECOGNITION
+   ========================================================= */
+
+if (!SpeechRecognition) {
+
+    micButton.disabled = true;
+
+    if (browserMessage) {
+        browserMessage.hidden = false;
+    }
+
+    statusText.textContent = "Voice input unavailable";
+
+    micInstruction.textContent =
+        "Please use the text box below to enter your response.";
+
+} else {
+
+    recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US";
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onstart = () => {
+
+        isListening = true;
+
+        micButton.classList.add("listening");
+
+        statusText.textContent = "Listening...";
+
+        micInstruction.textContent =
+            "Speak naturally. Tap the microphone again when you're finished.";
+    };
+
+
+    recognition.onresult = (event) => {
+
+        let finalTranscript = "";
+        let interimTranscript = "";
+
+        for (
+            let i = event.resultIndex;
+            i < event.results.length;
+            i++
+        ) {
+
+            const result = event.results[i];
+
+            if (result.isFinal) {
+
+                finalTranscript += result[0].transcript;
+
+            } else {
+
+                interimTranscript += result[0].transcript;
+            }
+        }
+
+        const existingText =
+            transcript.dataset.finalText || "";
+
+        const combinedText =
+            existingText +
+            finalTranscript +
+            interimTranscript;
+
+        transcript.value = combinedText.trim();
+
+        if (finalTranscript) {
+
+            transcript.dataset.finalText =
+                (existingText + finalTranscript + " ").trim();
+        }
+
+        updateContinueButton();
+    };
+
+
+    recognition.onerror = (event) => {
+
+        console.error(
+            "Speech recognition error:",
+            event.error
+        );
+
+        isListening = false;
+
+        micButton.classList.remove("listening");
+
+        statusText.textContent = "Voice input error";
+
+        micInstruction.textContent =
+            "We couldn't capture your voice. Please try again.";
+    };
+
+
+    recognition.onend = () => {
+
+        isListening = false;
+
+        micButton.classList.remove("listening");
+
+        if (transcript.value.trim()) {
+
+            statusText.textContent = "Response captured";
+
+            micInstruction.textContent =
+                "Review your response or tap Continue.";
+
+        } else {
+
+            statusText.textContent = "Ready to listen";
+
+            micInstruction.textContent =
+                "Tap the microphone and speak naturally.";
+        }
+    };
+}
+
+
+/* =========================================================
+   MICROPHONE BUTTON
+   ========================================================= */
+
+micButton.addEventListener("click", () => {
+
+    if (!recognition || isProcessing) return;
+
+    if (isListening) {
+
+        recognition.stop();
+
+    } else {
+
+        try {
+
+            recognition.start();
+
+        } catch (error) {
+
+            console.error(
+                "Unable to start speech recognition:",
+                error
+            );
+        }
+    }
+});
+
+
+/* =========================================================
+   CLEAR RESPONSE
+   ========================================================= */
+
+clearTranscript.addEventListener("click", () => {
+
+    if (isProcessing) return;
+
+    transcript.value = "";
+
+    transcript.dataset.finalText = "";
+
+    statusText.textContent =
+        isListening ? "Listening..." : "Ready to listen";
+
+    micInstruction.textContent =
+        "Tap the microphone and speak naturally.";
+
+    updateContinueButton();
+});
+
+
+/* =========================================================
+   TEXT BOX
+   ========================================================= */
+
+transcript.addEventListener("input", () => {
+
+    transcript.dataset.finalText =
+        transcript.value;
+
+    updateContinueButton();
+});
+
+
+/* =========================================================
+   CONTINUE → GEMINI
+   ========================================================= */
+
+continueButton.addEventListener("click", async () => {
+
+    const patientResponse =
+        transcript.value.trim();
+
+    if (!patientResponse || isProcessing) {
+        return;
+    }
+
+    isProcessing = true;
+
+    continueButton.disabled = true;
+    clearTranscript.disabled = true;
+    micButton.disabled = true;
+
+    if (isListening && recognition) {
+        recognition.stop();
+    }
+
+    statusText.textContent = "SEHAD is thinking...";
+
+    micInstruction.textContent =
+        "Please wait while SEHAD processes your response.";
+
+    /*
+        Add patient's response to conversation history.
+    */
+
+    conversationHistory.push({
+        role: "PATIENT",
+        content: patientResponse
+    });
+
+
+    try {
+
+        const response = await fetch(
+            "/api/case/next-question",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    patientResponse,
+                    conversationHistory
+                })
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Unable to process response."
+            );
+        }
+
+
+        const aiData = data.data;
+
+        console.log(
+            "SEHAD AI response:",
+            aiData
+        );
+
+
+        /*
+            Add SEHAD's next question to history.
+        */
+
+        if (aiData.next_question && questionCount < MAX_QUESTIONS) {
+
+            conversationHistory.push({
+                role: "SEHAD",
+                content: aiData.next_question
+            });
+        }
+
+
+        /*
+            Update the question on screen.
+        */
+
+        if (aiData.next_question && questionCount < MAX_QUESTIONS) {
+
+            caseQuestion.textContent =
+                aiData.next_question;
+        }
+
+        if (!aiData.case_complete && questionCount < MAX_QUESTIONS) {
+
+    questionCount++;
+
+    questionNumber.textContent =
+        `Question ${questionCount} of ${MAX_QUESTIONS}`;
+
+    const remainingQuestions =
+        MAX_QUESTIONS - questionCount;
+
+    progressLabel.textContent =
+        remainingQuestions === 0
+            ? "Final question"
+            : `${remainingQuestions} ${remainingQuestions === 1 ? "question" : "questions"} remaining`;
+
+    const progress =
+        (questionCount / MAX_QUESTIONS) * 100;
+
+    progressFill.style.width =
+        `${progress}%`;
+}
+
+
+        /*
+            Clear the previous patient response.
+        */
+
+        transcript.value = "";
+        transcript.dataset.finalText = "";
+
+
+        /*
+            If the AI says the case is complete,
+            we will handle the summary/submission
+            flow in a later milestone.
+        */
+
+        if (aiData.case_complete || questionCount >= MAX_QUESTIONS) {
+
+    statusText.textContent =
+        "Case-taking complete";
+
+    questionNumber.textContent =
+        "Case complete";
+
+    progressLabel.textContent =
+        "Ready for review";
+
+    progressFill.style.width =
+        "100%";
+
+    document.querySelector(".voice-question").hidden = true;
+    document.querySelector(".voice-status").hidden = true;
+    micButton.hidden = true;
+    micInstruction.hidden = true;
+    document.querySelector(".transcript-section").hidden = true;
+    document.querySelector(".voice-actions").hidden = true;
+    browserMessage.hidden = true;
+
+    caseCompleted = true;   
+
+    caseCompletion.hidden = false;
+
+    speakQuestion(
+    "You're ready for practitioner review. You can now review your case summary before sharing it with your practitioner."
+);
+
+    isProcessing = false;
+
+    return;
+}
+
+
+        /*
+            Normal case:
+            SEHAD asks the next question aloud.
+        */
+
+        statusText.textContent =
+            "SEHAD is speaking...";
+
+        micInstruction.textContent =
+            "Please listen to the next question.";
+
+        speakQuestion(
+            aiData.next_question
+        );
+
+    } catch (error) {
+
+        console.error(
+            "AI case-taking error:",
+            error
+        );
+
+        /*
+            Remove the patient response from the
+            conversation history if the request failed.
+        */
+
+        conversationHistory.pop();
+
+        statusText.textContent =
+            "Unable to process response";
+
+        micInstruction.textContent =
+            "Connection problem. Please try again.";
+
+        alert(
+            "Unable to process your response right now. Please try again."
+        );
+
+    } finally {
+
+        isProcessing = false;
+
+        clearTranscript.disabled = false;
+
+        if (recognition) {
+            micButton.disabled = false;
+        }
+
+        updateContinueButton();
+    }
+});
+
+
+/* =========================================================
+   SEHAD TEXT-TO-SPEECH
+   ========================================================= */
+
+function speakQuestion(text) {
+
+    if (!text) return;
+
+
+    /*
+        Stop anything currently being spoken.
+    */
+
+    window.speechSynthesis.cancel();
+
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
+    utterance.lang = "en-US";
+
+    utterance.rate = 0.95;
+
+    utterance.pitch = 1;
+
+
+    utterance.onstart = () => {
+
+        statusText.textContent =
+            "SEHAD is speaking...";
+
+        micButton.disabled = true;
+
+        micInstruction.textContent =
+            "Please listen to the question.";
+    };
+
+
+    utterance.onend = () => {
+
+        statusText.textContent =
+            "Your turn";
+
+            if (!caseCompleted) {
+                micButton.disabled = false;
+            }
+                micInstruction.textContent =
+                "Tap the microphone and speak naturally.";
+    };
+
+
+    utterance.onerror = (event) => {
+
+        console.error(
+            "Speech synthesis error:",
+            event
+        );
+
+        statusText.textContent =
+            "Your turn";
+
+        if (!caseCompleted) {
+            micButton.disabled = false;
+        }
+
+        micInstruction.textContent =
+            "You can answer by speaking or typing.";
+    };
+
+
+    window.speechSynthesis.speak(
+        utterance
+    );
+}
+
+
+/* =========================================================
+   CONTINUE BUTTON STATE
+   ========================================================= */
+
+function updateContinueButton() {
+
+    continueButton.disabled =
+        !transcript.value.trim() ||
+        isProcessing;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+backButton.addEventListener("click", () => {
+
+    window.speechSynthesis.cancel();
+
+    window.location.href =
+        "/pages/new-case.html";
+});
+</script>
+
+</body>
+
+</html>

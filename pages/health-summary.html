@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SEHAD | Health Summary</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- HORIZONTAL TOP NAVIGATION -->
+
+    <nav class="health-summary-nav">
+
+        <a href="../index.html" class="health-summary-brand">
+            <img
+                src="../assets/sehad-logo.png"
+                alt="SEHAD Logo"
+                class="health-summary-logo"
+            >
+        </a>
+
+        <div class="health-summary-nav-links">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="cases.html">
+                My Cases
+            </a>
+
+            <a href="documents.html">
+                Documents
+            </a>
+
+            <a href="visits.html">
+                Previous Visits
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+            <a href="settings.html">
+                Settings
+            </a>
+
+            <a href="health-summary.html" class="active">
+                Health Summary
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HEALTH SUMMARY CONTENT -->
+
+    <main class="health-summary-page">
+
+        <!-- PAGE HEADER -->
+
+        <div class="summary-header">
+
+            <div>
+                <span class="small-label">
+                    YOUR HEALTH INFORMATION
+                </span>
+
+                <h1>
+                    Health Summary
+                </h1>
+
+                <p>
+                    Review your current case information and previous
+                    health history in one place.
+                </p>
+            </div>
+
+        </div>
+
+
+        <!-- CURRENT CASE -->
+
+        <section class="summary-card">
+
+    <div class="summary-card-header">
+
+    <div>
+        <span class="summary-label">
+            CURRENT CASE
+        </span>
+
+        <h2>
+            Current Case Summary
+        </h2>
+    </div>
+
+    <div class="summary-card-actions">
+
+        <span id="summaryStatus" class="summary-status">
+            Loading...
+        </span>
+
+        <button
+            type="button"
+            id="deleteCaseButton"
+            class="delete-case-button"
+            hidden
+        >
+            Delete Case
+        </button>
+
+    </div>
+
+</div>
+
+
+    <div id="currentCaseContent" class="current-case-content">
+
+        <p>
+            Loading your latest case summary...
+        </p>
+
+    </div>
+
+</section>
+
+
+        <!-- PREVIOUS HEALTH HISTORY -->
+
+        <section class="summary-card">
+
+            <div class="summary-card-header">
+
+                <div>
+                    <span class="summary-label">
+                        HEALTH HISTORY
+                    </span>
+
+                    <h2>
+                        Previous Health Information
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="history-empty">
+
+                <h3>
+                    Your previous health history
+                </h3>
+
+                <p>
+                    Previous consultation and case information will
+                    be organized here as your SEHAD health record grows.
+                </p>
+
+                <a href="visits.html" class="secondary-summary-button">
+                    View Previous Visits
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- FUTURE CONSULTATION -->
+
+        <section class="consultation-card">
+
+            <div>
+
+                <span class="summary-label">
+                    NEXT STEP
+                </span>
+
+                <h2>
+                    Consultation
+                </h2>
+
+                <p>
+                    Practitioner consultation and verified clinical
+                    information will be available here in a future
+                    version of SEHAD.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="consultation-button"
+                disabled
+            >
+                Consultation
+            </button>
+
+        </section>
+
+
+        <!-- DISCLAIMER -->
+
+        <p class="summary-disclaimer">
+            SEHAD provides AI-assisted case-taking and information
+            organization. It does not independently diagnose conditions
+            or prescribe treatment.
+        </p>
+
+    </main>
+
+    <script>
+
+    const summaryStatus =
+        document.getElementById("summaryStatus");
+
+    const currentCaseContent =
+        document.getElementById("currentCaseContent");
+
+    const deleteCaseButton =
+        document.getElementById("deleteCaseButton");
+
+
+    async function loadCurrentCase() {
+
+        try {
+
+            const response = await fetch(
+                "/api/case/current"
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to load your case."
+                );
+
+            }
+
+
+            /*
+             * No completed case exists.
+             */
+
+            if (!data.hasCase || !data.data) {
+
+                summaryStatus.textContent =
+                    "No Active Case";
+
+                currentCaseContent.innerHTML = `
+                    <div class="history-empty">
+
+                        <h3>
+                            No completed case yet
+                        </h3>
+
+                        <p>
+                            Complete a case with SEHAD to see
+                            your health summary here.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const summary =
+                data.data.ai_summary;
+
+
+            if (!summary) {
+
+                summaryStatus.textContent =
+                    "Summary unavailable";
+
+                currentCaseContent.innerHTML = `
+                    <div class="history-empty">
+
+                        <h3>
+                            Summary not available
+                        </h3>
+
+                        <p>
+                            Your case was saved, but its AI summary
+                            is currently unavailable.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            summaryStatus.textContent =
+                "Case Completed";
+
+            if (deleteCaseButton) {
+    deleteCaseButton.hidden = false;
+}
+
+
+            const symptoms =
+                Array.isArray(summary.symptoms)
+                    ? summary.symptoms
+                    : [];
+
+
+            const associatedSymptoms =
+                Array.isArray(summary.associated_symptoms)
+                    ? summary.associated_symptoms
+                    : [];
+
+
+            const additionalInformation =
+                Array.isArray(summary.additional_information)
+                    ? summary.additional_information
+                    : [];
+
+
+            currentCaseContent.innerHTML = `
+
+                <div class="case-summary-grid">
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Chief Complaint
+                        </span>
+
+                        <p>
+                            ${summary.chief_complaint || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Onset & Duration
+                        </span>
+
+                        <p>
+                            ${summary.onset_duration || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Severity
+                        </span>
+
+                        <p>
+                            ${summary.severity || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Symptoms
+                        </span>
+
+                        <p>
+                            ${
+                                symptoms.length > 0
+                                    ? symptoms.join(", ")
+                                    : "Not reported"
+                            }
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Associated Symptoms
+                        </span>
+
+                        <p>
+                            ${
+                                associatedSymptoms.length > 0
+                                    ? associatedSymptoms.join(", ")
+                                    : "Not reported"
+                            }
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Medical History
+                        </span>
+
+                        <p>
+                            ${summary.medical_history || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Medications
+                        </span>
+
+                        <p>
+                            ${
+                                Array.isArray(summary.medications) &&
+                                summary.medications.length > 0
+                                    ? summary.medications.join(", ")
+                                    : "Not reported"
+                            }
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Allergies
+                        </span>
+
+                        <p>
+                            ${summary.allergies || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item">
+                        <span class="summary-field-label">
+                            Previous Treatment
+                        </span>
+
+                        <p>
+                            ${summary.previous_treatment || "Not reported"}
+                        </p>
+                    </div>
+
+
+                    <div class="case-summary-item full-width">
+                        <span class="summary-field-label">
+                            Additional Information
+                        </span>
+
+                        <p>
+                            ${
+                                additionalInformation.length > 0
+                                    ? additionalInformation.join(", ")
+                                    : "Not reported"
+                            }
+                        </p>
+                    </div>
+
+                </div>
+            `;
+
+
+        } catch (error) {
+
+            console.error(
+                "Health Summary error:",
+                error
+            );
+
+
+            summaryStatus.textContent =
+                "Unable to load";
+
+
+            currentCaseContent.innerHTML = `
+                <div class="history-empty">
+
+                    <h3>
+                        Unable to load your case
+                    </h3>
+
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
+
+                </div>
+            `;
+
+        }
+
+    }
+
+if (deleteCaseButton) {
+
+    deleteCaseButton.addEventListener("click", async () => {
+
+        const confirmed = confirm(
+            "Are you sure you want to permanently delete your current case? This action cannot be undone."
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        deleteCaseButton.disabled = true;
+        deleteCaseButton.textContent = "Deleting...";
+
+        try {
+
+            const response = await fetch(
+                "/api/case/current",
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(
+                    data.message ||
+                    "Unable to delete your case."
+                );
+            }
+
+            /*
+             * Case was permanently deleted.
+             */
+            summaryStatus.textContent =
+                "No Active Case";
+
+            currentCaseContent.innerHTML = `
+                <div class="history-empty">
+
+                    <h3>
+                        No completed case yet
+                    </h3>
+
+                    <p>
+                        Complete a case with SEHAD to see
+                        your health summary here.
+                    </p>
+
+                </div>
+            `;
+
+            deleteCaseButton.hidden = true;
+
+        } catch (error) {
+
+            console.error(
+                "Case deletion error:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "Unable to delete your case right now."
+            );
+
+            deleteCaseButton.disabled = false;
+            deleteCaseButton.textContent = "Delete Case";
+        }
+
+    });
+
+}
+
+
+    loadCurrentCase();
+
+</script>
+
+</body>
+
+</html>

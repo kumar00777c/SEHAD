@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <!-- Branding -->
+            <div class="auth-brand">
+                <div class="auth-logo">S</div>
+
+                <div>
+                    <h1>SEHAD</h1>
+                    <p>Smart Electronic Health Assessment & Documentation</p>
+                </div>
+            </div>
+
+
+            <!-- Heading -->
+            <div class="auth-heading">
+                <h2>Create your account</h2>
+                <p>Start managing your health information securely.</p>
+            </div>
+
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <small>Use at least 6 characters.</small>
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Re-enter your password"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+
+                <!-- Error / Success Message -->
+                <div id="authMessage" class="auth-message"></div>
+
+
+                <!-- Submit -->
+                <button type="submit" id="signupButton" class="auth-button">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <!-- Login Switch -->
+            <div class="auth-switch">
+                Already have an account?
+                <a href="login.html">Log in</a>
+            </div>
+
+
+            <!-- Privacy Note -->
+            <p class="auth-footer">
+                Your information is handled securely and used only for your SEHAD account.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script>
+        const signupForm = document.getElementById("signupForm");
+        const signupButton = document.getElementById("signupButton");
+        const authMessage = document.getElementById("authMessage");
+
+        signupForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            authMessage.textContent = "";
+            authMessage.className = "auth-message";
+
+            // Client-side validation
+            if (!fullName || !email || !password || !confirmPassword) {
+                showMessage("Please fill in all fields.", "error");
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage("Password must be at least 6 characters long.", "error");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage("Passwords do not match.", "error");
+                return;
+            }
+
+            // Loading state
+            signupButton.disabled = true;
+            signupButton.textContent = "Creating account...";
+
+            try {
+                const response = await fetch("/api/auth/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        fullName,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    showMessage(
+                        data.message || "Unable to create your account.",
+                        "error"
+                    );
+
+                    signupButton.disabled = false;
+                    signupButton.textContent = "Create Account";
+                    return;
+                }
+
+                showMessage(
+                    "Account created successfully! Redirecting...",
+                    "success"
+                );
+
+                setTimeout(() => {
+                    window.location.href = "../index.html";
+                }, 1200);
+
+            } catch (error) {
+                console.error("Signup error:", error);
+
+                showMessage(
+                    "Unable to connect to SEHAD. Please try again.",
+                    "error"
+                );
+
+                signupButton.disabled = false;
+                signupButton.textContent = "Create Account";
+            }
+        });
+
+
+        function showMessage(message, type) {
+            authMessage.textContent = message;
+            authMessage.className = `auth-message ${type}`;
+        }
+    </script>
+
+</body>
+</html>

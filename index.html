@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SEHAD | Patient Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+                <img src="assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+            </div>
+
+
+            <nav class="sidebar-navigation">
+
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">⌂</span>
+                    <span data-i18n="home">Home</span>
+                </a>
+
+                <a href="pages/cases.html" class="nav-item">
+                    <span class="nav-icon">▣</span>
+                    <span data-i18n="myCases">My Cases</span>
+                </a>
+
+                <a href="pages/documents.html" class="nav-item">
+                    <span class="nav-icon">□</span>
+                    <span data-i18n="documents">Documents</span>
+                </a>
+
+                 <a href="pages/visits.html" class="nav-item">
+                    <span class="nav-icon">▦</span>
+                    <span data-i18n="previousVisits">Previous Visits</span>
+                </a>
+
+                <a href="pages/profile.html" class="nav-item">
+                    <span class="nav-icon">♙</span>
+                    <span data-i18n="profile">Profile</span>
+                </a>
+
+                <a href="pages/settings.html" class="nav-item">
+                    <span class="nav-icon">⚙</span>
+                    <span data-i18n="settings">Settings</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Security Card -->
+
+            <div class="security-card">
+
+                <div class="security-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Your health information
+                    is private and secure.
+                </h3>
+
+                <p>
+                    We follow best practices to
+                    keep your health information safe.
+                </p>
+
+                <a href="#">
+                    Learn more →
+                </a>
+
+            </div>
+
+
+            <!-- Logout -->
+
+            <button id="logoutButton" class="logout-button">
+                <span>⇥</span>
+                <span data-i18n="logout">Log Out</span>
+            </button>
+
+        </aside>
+
+
+
+        <!-- =========================
+             MAIN AREA
+        ========================== -->
+
+        <div class="main-area">
+
+
+            <!-- =========================
+                 TOP HEADER
+            ========================== -->
+
+            <header class="top-header">
+
+                <div class="header-left">
+
+                    <button class="menu-button">
+                        ☰
+                    </button>
+
+                    <span class="page-title" data-i18n="dashboard">
+                        Dashboard
+                    </span>
+
+                </div>
+
+
+                <div class="header-right">
+
+                    <button class="language-selector">
+                        🌐
+                        <span class="sehad-current-language">English</span>
+                        ˅
+                    </button>
+
+                    <div class="patient-profile">
+
+                        <div class="avatar" id="patientAvatar">--</div>
+
+                        <div class="patient-details">
+                            <strong id="patientName"></strong>
+                            <span data-i18n="patient">Patient</span>
+                        </div>
+
+                        <span>⌄</span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+<script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = cachedName;
+        }
+
+        if (patientAvatar) {
+            const initials = cachedName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+    }
+</script>
+
+            <!-- =========================
+                 DASHBOARD CONTENT
+            ========================== -->
+
+            <main class="dashboard-content">
+
+
+                <!-- Welcome -->
+
+                <section class="welcome-section">
+
+                    <div>
+
+                        <h2>
+                            <span data-i18n="hello">Hello</span> 
+                            <span id="welcomeName">there
+                            </span> 
+                            👋
+                        </h2>
+
+                        <p data-i18n="feelingToday">
+                            How are you feeling today?
+                        </p>
+
+                    </div>
+
+
+                    <div class="ai-info">
+
+                        <div class="ai-icon">
+                            ✦
+                        </div>
+
+                        <div>
+                            <strong data-i18n="aiCareTitle">
+                                AI-assisted care-taking
+                            </strong>
+
+                            <p data-i18n="aiCareText">
+                                Share your symptoms and we'll
+                                help organize the information.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================
+                     MAIN DASHBOARD CARDS
+                ========================== -->
+
+                <section class="top-cards">
+
+
+                    <!-- Start New Case -->
+
+                    <div class="start-case-card">
+
+                        <div class="case-illustration">
+                            🩺
+                        </div>
+
+                        <div class="case-content">
+
+                            <span class="small-label" data-i18n="beginConsultation">
+                                BEGIN A NEW CONSULTATION
+                            </span>
+
+                            <h2>
+                                Start New Case
+                            </h2>
+
+                            <p data-i18n="startCaseDescription">
+                                Begin AI-assisted case-taking and
+                                share your health information with
+                                your practitioner.
+                            </p>
+
+                            <button id="startCaseButton" class="primary-button">
+                                <span>＋</span>
+                                <span data-i18n="startNewCase">Start New Case</span>
+                                <span>→</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Health Overview -->
+
+                    <div class="health-overview">
+
+                        <div class="card-title">
+                            <h2 data-i18n="healthOverview">
+                                Your Health Overview
+                            </h2>
+                        </div>
+
+
+                        <div class="overview-items">
+
+                            <div class="overview-item">
+
+                                <div class="overview-icon green">
+                                    ♥
+                                </div>
+
+                                <span data-i18n="activeCases">
+                                    Active Cases
+                                </span>
+
+                                <strong id="activeCasesCount">
+                                    0
+                                </strong>
+
+                                <small data-i18n="inProgress">
+                                    In Progress
+                                </small>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <div class="overview-icon blue">
+                                    ▣
+                                </div>
+
+                                <span data-i18n="previousVisits">
+                                    Previous Visits
+                                </span>
+
+                                <strong>
+                                    3
+                                </strong>
+
+                                <small data-i18n="completed">
+                                    Completed
+                                </small>
+
+                            </div>
+
+
+                            <div class="overview-item">
+
+                                <div class="overview-icon purple">
+                                    ▤
+                                </div>
+
+                                <span data-i18n="documents">
+                                    Documents
+                                </span>
+
+                                <strong>
+                                    5
+                                </strong>
+
+                                <small data-i18n="uploaded">
+                                    Uploaded
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <a href="pages/health-summary.html" class="summary-button">
+                           <span data-i18n="healthSummary">View your health summary</span> 
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =========================
+                     LOWER DASHBOARD
+                ========================== -->
+
+                <section class="lower-section">
+
+
+                    <!-- Recent Consultations -->
+
+                    <div class="consultations-card">
+
+                        <div class="card-header">
+
+                            <h2 data-i18n="recentConsultations">
+                                Recent Consultations
+                            </h2>
+
+                            <button data-i18n="viewAll">
+                                View All
+                            </button>
+
+                        </div>
+
+
+                        <div class="consultation-table-header">
+
+                            <span data-i18n="date">Date</span>
+                            <span data-i18n="reasonForVisit">Reason for Visit</span>
+                            <span data-i18n="practitioner">Practitioner</span>
+                            <span data-i18n="status">Status</span>
+
+                        </div>
+
+
+                        <!-- Consultation 1 -->
+
+                        <div class="consultation-row">
+
+                            <div class="visit-date">
+                                <strong>12</strong>
+                                <span>May</span>
+                                <small>2026</small>
+                            </div>
+
+                            <div class="visit-reason">
+                                <strong>
+                                    Fever and Cough
+                                </strong>
+
+                                <span>
+                                    Fever for 3 days, dry cough
+                                </span>
+                            </div>
+
+                            <div class="practitioner">
+
+                                <div class="practitioner-avatar">
+                                    AS
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        Dr. Ananya Sharma
+                                    </strong>
+
+                                    <span>
+                                        General Physician
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="status completed">
+                               <span data-i18n="completed">Completed</span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Consultation 2 -->
+
+                        <div class="consultation-row">
+
+                            <div class="visit-date">
+                                <strong>28</strong>
+                                <span>Apr</span>
+                                <small>2026</small>
+                            </div>
+
+                            <div class="visit-reason">
+                                <strong>
+                                    Stomach Pain
+                                </strong>
+
+                                <span>
+                                    Pain in abdomen and acidity
+                                </span>
+                            </div>
+
+                            <div class="practitioner">
+
+                                <div class="practitioner-avatar">
+                                    RP
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        Dr. Rajesh Patel
+                                    </strong>
+
+                                    <span>
+                                        General Physician
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="status completed">
+                                Completed
+                            </div>
+
+                        </div>
+
+
+                        <!-- Consultation 3 -->
+
+                        <div class="consultation-row">
+
+                            <div class="visit-date">
+                                <strong>10</strong>
+                                <span>Apr</span>
+                                <small>2026</small>
+                            </div>
+
+                            <div class="visit-reason">
+                                <strong>
+                                    Headache
+                                </strong>
+
+                                <span>
+                                    Severe headache for 2 days
+                                </span>
+                            </div>
+
+                            <div class="practitioner">
+
+                                <div class="practitioner-avatar">
+                                    AS
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        Dr. Ananya Sharma
+                                    </strong>
+
+                                    <span>
+                                        General Physician
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="status reviewed">
+                               <span data-i18n="reviewed">Reviewed</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="consultation-info">
+                            ⓘ
+                            Consultation history helps your doctor
+                            understand you better.
+                        </div>
+
+                    </div>
+
+
+
+                    
+
+                
+
+
+
+                <!-- Footer -->
+
+                <footer class="dashboard-footer">
+
+                    <span>
+                        ♙
+                    </span>
+
+                    <p>
+                        SEHAD is not a diagnostic or treatment system.
+                        Always consult your doctor for medical decisions.
+                    </p>
+
+                </footer>
+
+
+            </main>
+
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+    <script src="translations.js"></script>
+
+    <script>
+    async function checkAuthentication() {
+    try {
+        const response = await fetch("/api/auth/me");
+
+        if (!response.ok) {
+            window.location.href = "/pages/login.html";
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.authenticated) {
+            window.location.href = "/pages/login.html";
+            return;
+        }
+
+        const fullName = data.user.full_name || "Patient";
+
+        const patientName = document.getElementById("patientName");
+        const welcomeName = document.getElementById("welcomeName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = fullName;
+        }
+
+        if (welcomeName) {
+            welcomeName.textContent = fullName;
+        }
+
+        if (patientAvatar) {
+            const initials = fullName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+
+    } catch (error) {
+        console.error("Authentication check failed:", error);
+
+        window.location.href = "/pages/login.html";
+    }
+}
+
+checkAuthentication();
+</script>
+
+</body>
+</html>

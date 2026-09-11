@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documents | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+                <img src="../assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+            </div>
+
+
+        <nav class="sidebar-navigation">
+
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a href="cases.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>My Cases</span>
+            </a>
+
+            <a href="documents.html" class="nav-item active">
+                <span class="nav-icon">□</span>
+                <span>Documents</span>
+            </a>
+
+            <a href="visits.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Previous Visits</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">♙</span>
+                <span>Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+
+        <!-- SECURITY CARD -->
+
+        <div class="security-card">
+
+            <div class="security-icon">
+                ✓
+            </div>
+
+            <h4>
+                Your health information<br>
+                is private and secure.
+            </h4>
+
+            <p>
+                We follow best practices to keep
+                your health information safe and confidential.
+            </p>
+
+            <a href="#">
+                Learn more →
+            </a>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="#" class="logout-button">
+            <span>↪</span>
+            Log Out
+        </a>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+            <div class="header-spacer"></div>
+
+            <div class="header-right">
+
+
+                <!-- LANGUAGE -->
+
+                <button class="language-button">
+                    <span>◎</span>
+                    English
+                    <span>⌄</span>
+                </button>
+
+
+                <!-- PROFILE -->
+
+                <div class="header-profile">
+
+                    <div class="profile-avatar" id="patientAvatar">--</div>
+
+                    <div class="profile-details">
+
+                        <strong id="patientName"></strong>
+
+                        <span>
+                            Patient
+                        </span>
+
+                    </div>
+
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = cachedName;
+        }
+
+        if (patientAvatar) {
+            const initials = cachedName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+    }
+</script>
+
+
+
+        <!-- ================= DOCUMENT PAGE ================= -->
+
+        <section class="documents-page">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="documents-page-header">
+
+                <div>
+
+                    <h1>
+                        My Documents
+                    </h1>
+
+                    <p>
+                        Upload and manage your medical documents securely
+                    </p>
+
+                </div>
+
+
+                <button class="upload-document-button">
+                    <span>+</span>
+                    Upload Document
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= STORAGE / INFO ================= -->
+
+            <div class="documents-overview">
+
+
+                <div class="document-stat">
+
+                    <div class="document-stat-icon">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Documents
+                        </span>
+
+                        <strong>
+                            5
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="document-stat">
+
+                    <div class="document-stat-icon blue">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Processed
+                        </span>
+
+                        <strong>
+                            4
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="document-stat">
+
+                    <div class="document-stat-icon purple">
+                        ◉
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Linked to Cases
+                        </span>
+
+                        <strong>
+                            3
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="document-storage">
+
+                    <div class="storage-header">
+
+                        <span>
+                            Document Storage
+                        </span>
+
+                        <strong>
+                            5 / 50 files
+                        </strong>
+
+                    </div>
+
+                    <div class="storage-bar">
+                        <div class="storage-fill"></div>
+                    </div>
+
+                    <small>
+                        Your documents are stored securely.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= TOOLBAR ================= -->
+
+            <div class="documents-toolbar">
+
+
+                <div class="document-search">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        placeholder="Search documents..."
+                    >
+
+                </div>
+
+
+                <div class="document-filters">
+
+                    <button class="document-filter active">
+                        All <span>5</span>
+                    </button>
+
+                    <button class="document-filter">
+                        Prescriptions <span>2</span>
+                    </button>
+
+                    <button class="document-filter">
+                        Reports <span>2</span>
+                    </button>
+
+                    <button class="document-filter">
+                        Other <span>1</span>
+                    </button>
+
+                </div>
+
+
+                <button class="sort-documents">
+                    Newest first ▾
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= DOCUMENT LIST ================= -->
+
+            <div class="documents-section">
+
+
+                <div class="documents-section-header">
+
+                    <div>
+
+                        <h2>
+                            Your Documents
+                        </h2>
+
+                        <p>
+                            Medical files you've uploaded to SEHAD
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DOCUMENT CARD 1 -->
+
+                <article class="document-card">
+
+                    <div class="document-file-icon prescription">
+                        Rx
+                    </div>
+
+
+                    <div class="document-details">
+
+                        <h3>
+                            Prescription_May_2026.pdf
+                        </h3>
+
+                        <div class="document-meta">
+
+                            <span>
+                                Prescription
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                1.2 MB
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                Uploaded May 18, 2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-linked">
+
+                            <span>
+                                Linked to:
+                            </span>
+
+                            <a href="cases.html">
+                                Fever and Cough
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-processing">
+
+                        <span class="processed-badge">
+                            ✓ Processed
+                        </span>
+
+                        <small>
+                            Information extracted
+                        </small>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button>
+                            View
+                        </button>
+
+                        <button>
+                            ⋮
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DOCUMENT CARD 2 -->
+
+                <article class="document-card">
+
+                    <div class="document-file-icon report">
+                        PDF
+                    </div>
+
+
+                    <div class="document-details">
+
+                        <h3>
+                            Blood_Test_Report.pdf
+                        </h3>
+
+                        <div class="document-meta">
+
+                            <span>
+                                Medical Report
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                2.4 MB
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                Uploaded May 17, 2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-linked">
+
+                            <span>
+                                Linked to:
+                            </span>
+
+                            <a href="cases.html">
+                                Fever and Cough
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-processing">
+
+                        <span class="processed-badge">
+                            ✓ Processed
+                        </span>
+
+                        <small>
+                            Information extracted
+                        </small>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button>
+                            View
+                        </button>
+
+                        <button>
+                            ⋮
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DOCUMENT CARD 3 -->
+
+                <article class="document-card">
+
+                    <div class="document-file-icon report">
+                        PDF
+                    </div>
+
+
+                    <div class="document-details">
+
+                        <h3>
+                            Ultrasound_Report.pdf
+                        </h3>
+
+                        <div class="document-meta">
+
+                            <span>
+                                Medical Report
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                3.1 MB
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                Uploaded April 28, 2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-linked">
+
+                            <span>
+                                Linked to:
+                            </span>
+
+                            <a href="cases.html">
+                                Stomach Pain
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-processing">
+
+                        <span class="processed-badge">
+                            ✓ Processed
+                        </span>
+
+                        <small>
+                            Information extracted
+                        </small>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button>
+                            View
+                        </button>
+
+                        <button>
+                            ⋮
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DOCUMENT CARD 4 -->
+
+                <article class="document-card">
+
+                    <div class="document-file-icon prescription">
+                        Rx
+                    </div>
+
+
+                    <div class="document-details">
+
+                        <h3>
+                            Doctor_Prescription_April.pdf
+                        </h3>
+
+                        <div class="document-meta">
+
+                            <span>
+                                Prescription
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                856 KB
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                Uploaded April 28, 2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-linked">
+
+                            <span>
+                                Linked to:
+                            </span>
+
+                            <a href="cases.html">
+                                Stomach Pain
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-processing">
+
+                        <span class="processed-badge">
+                            ✓ Processed
+                        </span>
+
+                        <small>
+                            Information extracted
+                        </small>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button>
+                            View
+                        </button>
+
+                        <button>
+                            ⋮
+                        </button>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DOCUMENT CARD 5 -->
+
+                <article class="document-card">
+
+                    <div class="document-file-icon other">
+                        IMG
+                    </div>
+
+
+                    <div class="document-details">
+
+                        <h3>
+                            Previous_Medical_Record.jpg
+                        </h3>
+
+                        <div class="document-meta">
+
+                            <span>
+                                Other
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                1.8 MB
+                            </span>
+
+                            <span>•</span>
+
+                            <span>
+                                Uploaded April 10, 2026
+                            </span>
+
+                        </div>
+
+
+                        <div class="document-linked">
+
+                            <span>
+                                Linked to:
+                            </span>
+
+                            <a href="cases.html">
+                                Headache
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="document-processing">
+
+                        <span class="processed-badge">
+                            ✓ Processed
+                        </span>
+
+                        <small>
+                            Information extracted
+                        </small>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button>
+                            View
+                        </button>
+
+                        <button>
+                            ⋮
+                        </button>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ================= PRIVACY NOTICE ================= -->
+
+            <div class="document-notice">
+
+                <div class="notice-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your documents remain under your control
+                    </strong>
+
+                    <p>
+                        SEHAD keeps your original documents available for
+                        viewing. Extracted information may not always be
+                        accurate and should be verified by your practitioner.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>

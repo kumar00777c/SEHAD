@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Previous Visits | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <img src="../assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+        </div>
+
+
+        <nav class="sidebar-navigation">
+
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a href="cases.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>My Cases</span>
+            </a>
+
+            <a href="documents.html" class="nav-item">
+                <span class="nav-icon">□</span>
+                <span>Documents</span>
+            </a>
+
+            <a href="visits.html" class="nav-item active">
+                <span class="nav-icon">▦</span>
+                <span>Previous Visits</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">♙</span>
+                <span>Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+
+        <!-- SECURITY CARD -->
+
+        <div class="security-card">
+
+            <div class="security-icon">
+                ✓
+            </div>
+
+            <h4>
+                Your health information<br>
+                is private and secure.
+            </h4>
+
+            <p>
+                We follow best practices to keep
+                your health information safe and confidential.
+            </p>
+
+            <a href="#">
+                Learn more →
+            </a>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="#" class="logout-button">
+            <span>↪</span>
+            Log Out
+        </a>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+            <div class="header-spacer"></div>
+
+            <div class="header-right">
+
+                <button class="language-button">
+                    <span>◎</span>
+                    English
+                    <span>⌄</span>
+                </button>
+
+
+                <div class="header-profile">
+
+                    <div class="profile-avatar" id="patientAvatar">--</div>
+
+                    <div class="profile-details">
+
+                        <strong id="patientName"></strong>
+
+                        <span>
+                            Patient
+                        </span>
+
+                    </div>
+
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = cachedName;
+        }
+
+        if (patientAvatar) {
+            const initials = cachedName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+    }
+</script>
+
+        <!-- ================= VISITS PAGE ================= -->
+
+        <section class="visits-page">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="visits-page-header">
+
+                <div>
+
+                    <h1>
+                        Previous Visits
+                    </h1>
+
+                    <p>
+                        View your previous consultations and health records
+                    </p>
+
+                </div>
+
+
+                <div class="visits-summary">
+
+                    <div>
+                        <strong>3</strong>
+                        <span>Total Visits</span>
+                    </div>
+
+                    <div>
+                        <strong>3</strong>
+                        <span>Completed</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= SEARCH / FILTER ================= -->
+
+            <div class="visits-toolbar">
+
+                <div class="visit-search">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search visits by complaint or practitioner..."
+                    >
+
+                </div>
+
+
+                <select class="visit-filter">
+
+                    <option>All Visits</option>
+                    <option>2026</option>
+                    <option>2025</option>
+
+                </select>
+
+
+                <select class="visit-sort">
+
+                    <option>Newest first</option>
+                    <option>Oldest first</option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- ================= TIMELINE ================= -->
+
+            <div class="visits-container">
+
+
+                <div class="visits-heading">
+
+                    <div>
+                        <h2>Consultation History</h2>
+
+                        <p>
+                            Your previous visits in chronological order
+                        </p>
+                    </div>
+
+                </div>
+
+
+
+                <!-- VISIT 1 -->
+
+                <article class="visit-card">
+
+                    <div class="visit-date">
+
+                        <strong>12</strong>
+                        <span>May</span>
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="visit-line">
+                        <span></span>
+                    </div>
+
+
+                    <div class="visit-content">
+
+                        <div class="visit-top">
+
+                            <div>
+
+                                <div class="visit-title">
+
+                                    <h3>
+                                        Fever and Cough
+                                    </h3>
+
+                                    <span class="visit-status">
+                                        Completed
+                                    </span>
+
+                                </div>
+
+                                <p class="visit-case-id">
+                                    Case ID: SEH-2026-001
+                                </p>
+
+                            </div>
+
+
+                            <a href="cases.html" class="visit-button">
+                                View Case →
+                            </a>
+
+                        </div>
+
+
+                        <div class="visit-details">
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Practitioner
+                                </span>
+
+                                <div class="visit-doctor">
+
+                                    <div class="visit-doctor-avatar">
+                                        AS
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Dr. Ananya Sharma
+                                        </strong>
+
+                                        <small>
+                                            General Physician
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Visit date
+                                </span>
+
+                                <strong>
+                                    May 12, 2026
+                                </strong>
+
+                                <small>
+                                    Consultation completed
+                                </small>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Documents
+                                </span>
+
+                                <strong>
+                                    2 documents
+                                </strong>
+
+                                <small>
+                                    Available
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VISIT 2 -->
+
+                <article class="visit-card">
+
+                    <div class="visit-date">
+
+                        <strong>28</strong>
+                        <span>Apr</span>
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="visit-line">
+                        <span></span>
+                    </div>
+
+
+                    <div class="visit-content">
+
+                        <div class="visit-top">
+
+                            <div>
+
+                                <div class="visit-title">
+
+                                    <h3>
+                                        Stomach Pain
+                                    </h3>
+
+                                    <span class="visit-status">
+                                        Completed
+                                    </span>
+
+                                </div>
+
+                                <p class="visit-case-id">
+                                    Case ID: SEH-2026-002
+                                </p>
+
+                            </div>
+
+
+                            <a href="cases.html" class="visit-button">
+                                View Case →
+                            </a>
+
+                        </div>
+
+
+                        <div class="visit-details">
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Practitioner
+                                </span>
+
+                                <div class="visit-doctor">
+
+                                    <div class="visit-doctor-avatar doctor-red">
+                                        RP
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Dr. Rajesh Patel
+                                        </strong>
+
+                                        <small>
+                                            General Physician
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Visit date
+                                </span>
+
+                                <strong>
+                                    April 28, 2026
+                                </strong>
+
+                                <small>
+                                    Consultation completed
+                                </small>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Documents
+                                </span>
+
+                                <strong>
+                                    1 document
+                                </strong>
+
+                                <small>
+                                    Available
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VISIT 3 -->
+
+                <article class="visit-card">
+
+                    <div class="visit-date">
+
+                        <strong>10</strong>
+                        <span>Apr</span>
+                        <small>2026</small>
+
+                    </div>
+
+
+                    <div class="visit-line">
+                        <span></span>
+                    </div>
+
+
+                    <div class="visit-content">
+
+                        <div class="visit-top">
+
+                            <div>
+
+                                <div class="visit-title">
+
+                                    <h3>
+                                        Headache
+                                    </h3>
+
+                                    <span class="visit-status reviewed">
+                                        Reviewed
+                                    </span>
+
+                                </div>
+
+                                <p class="visit-case-id">
+                                    Case ID: SEH-2026-003
+                                </p>
+
+                            </div>
+
+
+                            <a href="cases.html" class="visit-button">
+                                View Case →
+                            </a>
+
+                        </div>
+
+
+                        <div class="visit-details">
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Practitioner
+                                </span>
+
+                                <div class="visit-doctor">
+
+                                    <div class="visit-doctor-avatar doctor-purple">
+                                        AS
+                                    </div>
+
+                                    <div>
+                                        <strong>
+                                            Dr. Ananya Sharma
+                                        </strong>
+
+                                        <small>
+                                            General Physician
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Visit date
+                                </span>
+
+                                <strong>
+                                    April 10, 2026
+                                </strong>
+
+                                <small>
+                                    Reviewed by practitioner
+                                </small>
+
+                            </div>
+
+
+                            <div class="visit-detail">
+
+                                <span class="detail-label">
+                                    Documents
+                                </span>
+
+                                <strong>
+                                    2 documents
+                                </strong>
+
+                                <small>
+                                    Available
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ================= INFO CARD ================= -->
+
+            <div class="visits-info">
+
+                <div class="visits-info-icon">
+                    ⓘ
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your consultation history stays with your record
+                    </strong>
+
+                    <p>
+                        Previous consultation information is kept as part
+                        of your longitudinal health record. Your practitioner
+                        can review relevant information from earlier visits
+                        during future consultations.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>

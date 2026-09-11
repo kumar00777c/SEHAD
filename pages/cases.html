@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Cases | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+                <img src="../assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+            </div>
+
+
+        <nav class="sidebar-navigation">
+
+    <a href="../index.html" class="nav-item">
+        <span class="nav-icon">⌂</span>
+        <span>Home</span>
+    </a>
+
+    <a href="cases.html" class="nav-item active">
+        <span class="nav-icon">▣</span>
+        <span>My Cases</span>
+    </a>
+
+    <a href="documents.html" class="nav-item">
+        <span class="nav-icon">□</span>
+        <span>Documents</span>
+    </a>
+
+    <a href="visits.html" class="nav-item">
+        <span class="nav-icon">▦</span>
+        <span>Previous Visits</span>
+    </a>
+
+    <a href="profile.html" class="nav-item">
+        <span class="nav-icon">♙</span>
+        <span>Profile</span>
+    </a>
+
+    <a href="settings.html" class="nav-item">
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+    </a>
+
+</nav>
+
+
+        <!-- SECURITY CARD -->
+
+        <div class="security-card">
+
+            <div class="security-icon">
+                ✓
+            </div>
+
+            <h4>Your health information<br>is private and secure.</h4>
+
+            <p>
+                We follow best practices to keep
+                your health information safe and confidential.
+            </p>
+
+            <a href="#">
+                Learn more →
+            </a>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="#" class="logout-button">
+            <span>↪</span>
+            Log Out
+        </a>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN AREA ================= -->
+
+    <main class="main-content">
+
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+            <div class="header-spacer"></div>
+
+            <div class="header-right">
+
+                <!-- Language -->
+
+                <button class="language-button">
+                    <span>◎</span>
+                    English
+                    <span>⌄</span>
+                </button>
+
+
+                <!-- Profile -->
+
+                <div class="header-profile">
+    <div class="profile-avatar" id="patientAvatar">
+        --
+    </div>
+
+    <div class="profile-details">
+        <strong id="patientName"></strong>
+        <span>Patient</span>
+    </div>
+
+    <span class="profile-arrow">⌄</span>
+</div>
+
+        </header>
+
+        <script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        patientName.textContent = cachedName;
+
+        const initials = cachedName
+            .trim()
+            .split(/\s+/)
+            .map(name => name[0])
+            .join("")
+            .slice(0, 2)
+            .toUpperCase();
+
+        patientAvatar.textContent = initials;
+    }
+</script>
+
+
+
+        <!-- ================= PAGE ================= -->
+
+        <section class="cases-page">
+
+
+            <!-- PAGE TITLE -->
+
+            <div class="cases-page-header">
+
+                <div>
+                    <h1>My Cases</h1>
+
+                    <p>
+                        View and manage all your health assessment cases
+                    </p>
+                </div>
+
+
+                <a href="new-case.html" class="start-case-button">
+                    <span>+</span>
+                    Start New Case
+                </a>
+
+            </div>
+
+
+
+            <!-- SEARCH + FILTER -->
+
+            <div class="cases-controls">
+
+                <div class="search-box">
+
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="text"
+                        placeholder="Search your cases by symptom, case ID, or doctor..."
+                    >
+
+                </div>
+
+
+                <div class="case-filters">
+
+                    <button class="filter active">
+                        All <span>3</span>
+                    </button>
+
+                    <button class="filter">
+                        Active <span>1</span>
+                    </button>
+
+                    <button class="filter">
+                        Completed <span>2</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= ACTIVE CASES ================= -->
+
+            <div class="cases-group">
+
+                <div class="group-title">
+                    <h2>Active Cases</h2>
+                    <span>1</span>
+                </div>
+
+
+                <!-- ACTIVE CASE -->
+
+                <article class="case-card active-case">
+
+                    <div class="case-main-info">
+
+                        <div class="case-icon fever-icon">
+                            🌡
+                        </div>
+
+                        <div class="case-title-area">
+
+                            <div class="case-title-row">
+
+                                <h3>Fever and Cough</h3>
+
+                                <span class="status active-status">
+                                    Active
+                                </span>
+
+                            </div>
+
+                            <p class="case-id">
+                                Case ID: SEH-2026-001
+                            </p>
+
+                            <p class="case-date">
+                                ▣ &nbsp; Started on May 18, 2026
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block">
+
+                        <span class="info-label">
+                            Last updated
+                        </span>
+
+                        <strong>
+                            Today, 10:30 AM
+                        </strong>
+
+                        <small>
+                            By you
+                        </small>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block doctor-block">
+
+                        <span class="info-label">
+                            Assigned to
+                        </span>
+
+                        <div class="doctor-info">
+
+                            <div class="doctor-avatar">
+                                AS
+                            </div>
+
+                            <div>
+                                <strong>Dr. Ananya Sharma</strong>
+                                <small>General Physician</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="progress-block">
+
+                        <div class="progress-header">
+
+                            <span>Progress</span>
+
+                            <span>60%</span>
+
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+
+                        <a href="new-case.html" class="continue-button">
+                            Continue Case →
+                        </a>
+
+                    </div>
+
+
+                    <button class="case-menu">
+                        ⋮
+                    </button>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- ================= COMPLETED CASES ================= -->
+
+            <div class="cases-group completed-group">
+
+                <div class="group-title">
+
+                    <h2>Completed Cases</h2>
+
+                    <span>2</span>
+
+                </div>
+
+
+                <!-- COMPLETED CASE 1 -->
+
+                <article class="case-card completed-case">
+
+                    <div class="case-main-info">
+
+                        <div class="case-icon stomach-icon">
+                            ♡
+                        </div>
+
+                        <div class="case-title-area">
+
+                            <div class="case-title-row">
+
+                                <h3>Stomach Pain</h3>
+
+                                <span class="status completed-status">
+                                    Completed
+                                </span>
+
+                            </div>
+
+                            <p class="case-id">
+                                Case ID: SEH-2026-002
+                            </p>
+
+                            <p class="case-date">
+                                ▣ &nbsp; Completed on April 28, 2026
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block">
+
+                        <span class="info-label">
+                            Consultation with
+                        </span>
+
+                        <div class="doctor-info">
+
+                            <div class="doctor-avatar doctor-red">
+                                RP
+                            </div>
+
+                            <div>
+                                <strong>Dr. Rajesh Patel</strong>
+                                <small>General Physician</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block">
+
+                        <span class="info-label">
+                            Duration
+                        </span>
+
+                        <strong>12 Apr – 28 Apr 2026</strong>
+
+                        <small>2 days</small>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block case-status-info">
+
+                        <span class="info-label">
+                            Status
+                        </span>
+
+                        <strong class="verified-status">
+                            ✓ Completed
+                        </strong>
+
+                        <small>Case closed</small>
+
+                    </div>
+
+
+                    <a href="#" class="view-case-button">
+                        View Case →
+                    </a>
+
+
+                    <button class="case-menu">
+                        ⋮
+                    </button>
+
+                </article>
+
+
+
+                <!-- COMPLETED CASE 2 -->
+
+                <article class="case-card completed-case">
+
+                    <div class="case-main-info">
+
+                        <div class="case-icon headache-icon">
+                            ◉
+                        </div>
+
+                        <div class="case-title-area">
+
+                            <div class="case-title-row">
+
+                                <h3>Headache</h3>
+
+                                <span class="status completed-status">
+                                    Completed
+                                </span>
+
+                            </div>
+
+                            <p class="case-id">
+                                Case ID: SEH-2026-003
+                            </p>
+
+                            <p class="case-date">
+                                ▣ &nbsp; Completed on April 10, 2026
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block">
+
+                        <span class="info-label">
+                            Consultation with
+                        </span>
+
+                        <div class="doctor-info">
+
+                            <div class="doctor-avatar doctor-purple">
+                                AS
+                            </div>
+
+                            <div>
+                                <strong>Dr. Ananya Sharma</strong>
+                                <small>General Physician</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block">
+
+                        <span class="info-label">
+                            Duration
+                        </span>
+
+                        <strong>08 Apr – 10 Apr 2026</strong>
+
+                        <small>3 days</small>
+
+                    </div>
+
+
+                    <div class="case-divider"></div>
+
+
+                    <div class="case-info-block case-status-info">
+
+                        <span class="info-label">
+                            Status
+                        </span>
+
+                        <strong class="verified-status">
+                            ✓ Reviewed
+                        </strong>
+
+                        <small>By practitioner</small>
+
+                    </div>
+
+
+                    <a href="#" class="view-case-button">
+                        View Case →
+                    </a>
+
+
+                    <button class="case-menu">
+                        ⋮
+                    </button>
+
+                </article>
+
+            </div>
+
+
+            <!-- INFORMATION NOTE -->
+
+            <div class="cases-note">
+
+                <div class="note-icon">
+                    ⓘ
+                </div>
+
+                <p>
+                    Can't find an old case?
+                    Check the
+                    <a href="visits.html">Previous Visits</a>
+                    section for older consultations.
+                </p>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+    <script>
+async function checkAuthentication() {
+    try {
+        const response = await fetch("/api/auth/me");
+
+        if (!response.ok) {
+            window.location.href = "/pages/login.html";
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!data.authenticated) {
+            window.location.href = "/pages/login.html";
+            return;
+        }
+
+        const fullName = data.user.full_name || "Patient";
+
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = fullName;
+        }
+
+        if (patientAvatar) {
+            const initials = fullName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+
+    } catch (error) {
+        console.error("Authentication check failed:", error);
+        window.location.href = "/pages/login.html";
+    }
+}
+
+checkAuthentication();
+</script>
+
+</body>
+</html>

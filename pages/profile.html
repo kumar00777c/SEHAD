@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <img src="../assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+        </div>
+
+
+        <nav class="sidebar-navigation">
+
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a href="cases.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>My Cases</span>
+            </a>
+
+            <a href="documents.html" class="nav-item">
+                <span class="nav-icon">□</span>
+                <span>Documents</span>
+            </a>
+
+            <a href="visits.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Previous Visits</span>
+            </a>
+
+            <a href="profile.html" class="nav-item active">
+                <span class="nav-icon">♙</span>
+                <span>Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+
+        <!-- SECURITY CARD -->
+
+        <div class="security-card">
+
+            <div class="security-icon">
+                ✓
+            </div>
+
+            <h4>
+                Your health information<br>
+                is private and secure.
+            </h4>
+
+            <p>
+                We follow best practices to keep
+                your health information safe and confidential.
+            </p>
+
+            <a href="#">
+                Learn more →
+            </a>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="#" class="logout-button">
+            <span>↪</span>
+            Log Out
+        </a>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP HEADER -->
+
+        <header class="top-header">
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+            <div class="header-spacer"></div>
+
+            <div class="header-right">
+
+                <button class="language-button">
+                    <span>◎</span>
+                    English
+                    <span>⌄</span>
+                </button>
+
+
+                <div class="header-profile">
+
+                    <div class="profile-avatar" id="patientAvatar">--</div>
+
+                    <div class="profile-details">
+
+                        <strong id="patientName"></strong>
+
+                        <span>
+                            Patient
+                        </span>
+
+                    </div>
+
+                    <span class="profile-arrow">
+                        ⌄
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = cachedName;
+        }
+
+        if (patientAvatar) {
+            const initials = cachedName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+    }
+</script>
+
+
+
+        <!-- ================= PROFILE PAGE ================= -->
+
+        <section class="profile-page">
+
+
+            <!-- PAGE HEADER -->
+
+            <div class="profile-page-header">
+
+                <div>
+
+                    <h1>My Profile</h1>
+
+                    <p>
+                        View and manage your personal and health information
+                    </p>
+
+                </div>
+
+
+                <button class="edit-profile-button">
+                    ✎ &nbsp; Edit Profile
+                </button>
+
+            </div>
+
+
+
+            <!-- ================= PROFILE HERO ================= -->
+
+            <div class="profile-hero">
+
+                <div class="large-profile-avatar">
+                    RK
+                </div>
+
+                <div class="profile-hero-details">
+
+                    <h2>
+                        Ramesh Kumar
+                    </h2>
+
+                    <p>
+                        Patient ID: SEH-P-2026-001
+                    </p>
+
+                    <span class="profile-verified">
+                        ✓ Profile verified
+                    </span>
+
+                </div>
+
+
+                <div class="profile-member">
+
+                    <span>
+                        Member since
+                    </span>
+
+                    <strong>
+                        April 2026
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= PERSONAL INFORMATION ================= -->
+
+            <div class="profile-section">
+
+                <div class="profile-section-header">
+
+                    <div>
+
+                        <h2>Personal Information</h2>
+
+                        <p>
+                            Basic information associated with your SEHAD profile
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-grid">
+
+
+                    <div class="profile-field">
+
+                        <label>Full Name</label>
+
+                        <div class="profile-input locked">
+                            Ramesh Kumar
+                            <span>🔒</span>
+                        </div>
+
+                        <small>
+                            Name can only be changed by an administrator.
+                        </small>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Date of Birth</label>
+
+                        <div class="profile-input">
+                            15 August 2005
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Gender</label>
+
+                        <div class="profile-input">
+                            Male
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Blood Group</label>
+
+                        <div class="profile-input">
+                            B+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Phone Number</label>
+
+                        <div class="profile-input">
+                            +91 98765 43210
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Email Address</label>
+
+                        <div class="profile-input">
+                            ramesh.kumar@example.com
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= ADDRESS + EMERGENCY ================= -->
+
+            <div class="profile-two-column">
+
+
+                <!-- ADDRESS -->
+
+                <div class="profile-section">
+
+                    <div class="profile-section-header">
+
+                        <div>
+
+                            <h2>Address</h2>
+
+                            <p>
+                                Your current residential address
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field full-width">
+
+                        <label>Address</label>
+
+                        <div class="profile-input">
+                            24, Green Park Road
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-grid two">
+
+                        <div class="profile-field">
+
+                            <label>City</label>
+
+                            <div class="profile-input">
+                                Cuttack
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-field">
+
+                            <label>State</label>
+
+                            <div class="profile-input">
+                                Odisha
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-grid two">
+
+                        <div class="profile-field">
+
+                            <label>PIN Code</label>
+
+                            <div class="profile-input">
+                                753001
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-field">
+
+                            <label>Country</label>
+
+                            <div class="profile-input">
+                                India
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMERGENCY CONTACT -->
+
+                <div class="profile-section">
+
+                    <div class="profile-section-header">
+
+                        <div>
+
+                            <h2>Emergency Contact</h2>
+
+                            <p>
+                                Someone we can contact in an emergency
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Contact Name</label>
+
+                        <div class="profile-input">
+                            Sunita Kumar
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-grid two">
+
+                        <div class="profile-field">
+
+                            <label>Relationship</label>
+
+                            <div class="profile-input">
+                                Mother
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-field">
+
+                            <label>Phone</label>
+
+                            <div class="profile-input">
+                                +91 91234 56789
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= HEALTH INFORMATION ================= -->
+
+            <div class="profile-section">
+
+                <div class="profile-section-header">
+
+                    <div>
+
+                        <h2>Health Information</h2>
+
+                        <p>
+                            Information that may help practitioners understand
+                            your health history
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-health-grid">
+
+
+                    <div class="profile-field">
+
+                        <label>Known Allergies</label>
+
+                        <div class="health-tags">
+
+                            <span>
+                                Penicillin
+                            </span>
+
+                            <span>
+                                Dust
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Existing Conditions</label>
+
+                        <div class="health-tags">
+
+                            <span>
+                                None reported
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="profile-field">
+
+                        <label>Current Medications</label>
+
+                        <div class="health-tags">
+
+                            <span>
+                                None reported
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= PRIVACY NOTICE ================= -->
+
+            <div class="profile-privacy">
+
+                <div class="profile-privacy-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your information is private
+                    </strong>
+
+                    <p>
+                        Your personal and health information is only used
+                        to support your SEHAD experience and clinical
+                        consultations. You control the information you provide.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+    <script src="../script.js"></script>
+
+</body>
+
+</html>

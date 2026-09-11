@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | SEHAD</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <img src="../assets/sehad-logo.png" alt="SEHAD Logo" class="brand-image">
+        </div>
+
+
+        <nav class="sidebar-navigation">
+
+            <a href="../index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+            </a>
+
+            <a href="cases.html" class="nav-item">
+                <span class="nav-icon">▣</span>
+                <span>My Cases</span>
+            </a>
+
+            <a href="documents.html" class="nav-item">
+                <span class="nav-icon">□</span>
+                <span>Documents</span>
+            </a>
+
+            <a href="visits.html" class="nav-item">
+                <span class="nav-icon">▦</span>
+                <span>Previous Visits</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <span class="nav-icon">♙</span>
+                <span>Profile</span>
+            </a>
+
+            <a href="settings.html" class="nav-item active">
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+
+        <!-- Logout -->
+
+        <button id="logoutButton" class="logout-button">
+            <span>⇥</span>
+            Log Out
+        </button>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN AREA
+    ========================== -->
+
+    <div class="main-area">
+
+
+        <!-- =========================
+             TOP HEADER
+        ========================== -->
+
+        <header class="top-header">
+
+            <div class="header-left">
+
+                <button class="menu-button">
+                    ☰
+                </button>
+
+                <span class="page-title">
+                    Settings
+                </span>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <button class="language-selector">
+                    🌐
+                    <span>English</span>
+                    ˅
+                </button>
+
+
+                <div class="patient-profile">
+
+                     <div class="profile-avatar" id="patientAvatar">--</div>
+
+                    <div class="patient-details">
+                        <strong id="patientName"></strong>
+                        <span>Patient</span>
+                    </div>
+
+                    <span>⌄</span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+<script>
+    const cachedName = sessionStorage.getItem("sehad_user_name");
+
+    if (cachedName) {
+        const patientName = document.getElementById("patientName");
+        const patientAvatar = document.getElementById("patientAvatar");
+
+        if (patientName) {
+            patientName.textContent = cachedName;
+        }
+
+        if (patientAvatar) {
+            const initials = cachedName
+                .trim()
+                .split(/\s+/)
+                .map(name => name[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase();
+
+            patientAvatar.textContent = initials;
+        }
+    }
+</script>
+
+        <!-- =========================
+             SETTINGS CONTENT
+        ========================== -->
+
+        <main class="settings-content">
+
+
+            <!-- Page Heading -->
+
+            <section class="settings-heading">
+
+                <div>
+                    <h2>Settings</h2>
+
+                    <p>
+                        Manage your account preferences and privacy settings
+                    </p>
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 ACCOUNT SETTINGS
+            ========================== -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-heading">
+
+                    <div class="settings-section-icon">
+                        👤
+                    </div>
+
+                    <div>
+                        <h3>Account</h3>
+
+                        <p>
+                            Manage your account and login preferences
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Email Address</strong>
+
+                            <span>
+                                ramesh.kumar@example.com
+                            </span>
+
+                        </div>
+
+                        <button class="setting-action">
+                            Change
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Password</strong>
+
+                            <span>
+                                Last changed recently
+                            </span>
+
+                        </div>
+
+                        <button class="setting-action">
+                            Change Password
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 LANGUAGE
+            ========================== -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-heading">
+
+                    <div class="settings-section-icon">
+                        🌐
+                    </div>
+
+                    <div>
+                        <h3>Language & Interaction</h3>
+
+                        <p>
+                            Choose how you interact with SEHAD
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Preferred Language</strong>
+
+                            <span>
+                                Used for case-taking and interface
+                            </span>
+
+                        </div>
+
+                        <select class="setting-select">
+
+                            <option selected>
+                                English
+                            </option>
+
+                            <option>
+                                Hindi
+                            </option>
+
+                            <option>
+                                Odia
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Case-taking Mode</strong>
+
+                            <span>
+                                Choose your preferred interaction method
+                            </span>
+
+                        </div>
+
+
+                        <select class="setting-select">
+
+                            <option selected>
+                                Voice & Text
+                            </option>
+
+                            <option>
+                                Voice
+                            </option>
+
+                            <option>
+                                Text
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 NOTIFICATIONS
+            ========================== -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-heading">
+
+                    <div class="settings-section-icon">
+                        🔔
+                    </div>
+
+                    <div>
+                        <h3>Notifications</h3>
+
+                        <p>
+                            Control the notifications you receive
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Case Updates</strong>
+
+                            <span>
+                                Get notified when your case status changes
+                            </span>
+
+                        </div>
+
+                        <label class="toggle">
+
+                            <input type="checkbox" checked>
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Consultation Reminders</strong>
+
+                            <span>
+                                Receive reminders about upcoming consultations
+                            </span>
+
+                        </div>
+
+                        <label class="toggle">
+
+                            <input type="checkbox" checked>
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Document Processing</strong>
+
+                            <span>
+                                Notify me when uploaded documents are processed
+                            </span>
+
+                        </div>
+
+                        <label class="toggle">
+
+                            <input type="checkbox" checked>
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 PRIVACY & SECURITY
+            ========================== -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-heading">
+
+                    <div class="settings-section-icon">
+                        🔐
+                    </div>
+
+                    <div>
+                        <h3>Privacy & Security</h3>
+
+                        <p>
+                            Manage how your health information is protected
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Health Information Privacy</strong>
+
+                            <span>
+                                Your health information is protected and
+                                accessible only to authorized users
+                            </span>
+
+                        </div>
+
+                        <span class="privacy-status">
+                            Protected
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Active Sessions</strong>
+
+                            <span>
+                                This device · Chrome on Windows
+                            </span>
+
+                        </div>
+
+                        <button class="setting-action">
+                            Manage
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 ACCESSIBILITY
+            ========================== -->
+
+            <section class="settings-section">
+
+                <div class="settings-section-heading">
+
+                    <div class="settings-section-icon">
+                        ◉
+                    </div>
+
+                    <div>
+                        <h3>Accessibility</h3>
+
+                        <p>
+                            Make SEHAD easier and more comfortable to use
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-list">
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Larger Text</strong>
+
+                            <span>
+                                Increase text size throughout the interface
+                            </span>
+
+                        </div>
+
+                        <label class="toggle">
+
+                            <input type="checkbox">
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-info">
+
+                            <strong>Voice Assistance</strong>
+
+                            <span>
+                                Use voice interaction wherever available
+                            </span>
+
+                        </div>
+
+                        <label class="toggle">
+
+                            <input type="checkbox" checked>
+
+                            <span class="toggle-slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================
+                 DANGER ZONE
+            ========================== -->
+
+            <section class="danger-section">
+
+                <div>
+
+                    <h3>Account Actions</h3>
+
+                    <p>
+                        Log out of your current SEHAD session.
+                    </p>
+
+                </div>
+
+                <button class="danger-button">
+                    Log Out
+                </button>
+
+            </section>
+
+
+
+            <!-- Footer -->
+
+            <footer class="settings-footer">
+
+                <span>SEHAD</span>
+
+                <p>
+                    Your health information stays under your control.
+                </p>
+
+            </footer>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+<script src="../script.js"></script>
+
+</body>
+</html>
