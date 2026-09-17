@@ -69,7 +69,50 @@ const SEHAD_TRANSLATIONS = {
         reviewed: "Reviewed",
 
         consultationHistory:
-            "Consultation history helps your doctor understand you better."
+            "Consultation history helps your doctor understand you better.",
+        
+                // Case Taking
+        caseTakingTitle: "Tell us what you're experiencing",
+        sehadAsks: "SEHAD ASKS",
+        initialCaseQuestion: "What brings you here today?",
+        caseQuestionHelp:
+            "Tell us about the main health concern that you would like to discuss.",
+        yourResponse: "Your response",
+        clear: "Clear",
+        responsePlaceholder: "Type your response here...",
+        yourTurn: "Your turn",
+        sehadThinking: "SEHAD is thinking...",
+        savingCase: "Saving your case...",
+        caseTakingComplete: "Case-taking complete",
+        caseComplete: "Case complete",
+        readyForReview: "Ready for review",
+        back: "Back",
+        continue: "Continue",
+        finalQuestion: "Final question",
+        questionRemaining: "question remaining",
+        questionsRemaining: "questions remaining",
+
+        caseCompleteTitle: "You're ready for practitioner review",
+        caseCompleteText:
+            "Your responses have been collected and organized. You can now review your case summary before sharing it with your practitioner.",
+        viewCaseSummary: "View Case Summary",
+        caseDisclaimer:
+            "SEHAD does not diagnose or prescribe treatment. Your practitioner will make clinical decisions based on your case.",
+        question: "Question",
+        of: "of", 
+        readyToListen: "Ready to listen",
+        tapMic: "Tap the microphone and speak naturally.",
+        spokenResponsePlaceholder:
+            "Your spoken response will appear here...",
+        listening: "Listening...",
+        voiceInputUnavailable: "Voice input unavailable",
+        voiceInputError: "Voice input error",
+        responseCaptured: "Response captured",
+        reviewResponse: "Review your response or tap Continue.",
+        pleaseListen: "Please listen to the next question.",
+        sehadSpeaking: "SEHAD is speaking...",
+        voiceUnsupported:
+            "Voice input is not supported by this browser. You can still enter your response using the text box above.",
     },
 
     hi: {
@@ -129,7 +172,50 @@ const SEHAD_TRANSLATIONS = {
         reviewed: "समीक्षित",
 
         consultationHistory:
-            "परामर्श का इतिहास आपके डॉक्टर को आपको बेहतर समझने में मदद करता है।"
+            "परामर्श का इतिहास आपके डॉक्टर को आपको बेहतर समझने में मदद करता है।",
+
+                // Case Taking
+        caseTakingTitle: "आप क्या अनुभव कर रहे हैं, हमें बताएं",
+        sehadAsks: "SEHAD पूछता है",
+        initialCaseQuestion: "आज आपको यहाँ किस समस्या के कारण आना पड़ा?",
+        caseQuestionHelp:
+            "जिस मुख्य स्वास्थ्य समस्या के बारे में आप चर्चा करना चाहते हैं, उसके बारे में बताएं।",
+        yourResponse: "आपका उत्तर",
+        clear: "साफ़ करें",
+        responsePlaceholder: "अपना उत्तर यहाँ लिखें...",
+        yourTurn: "आपकी बारी",
+        sehadThinking: "SEHAD सोच रहा है...",
+        savingCase: "आपका केस सहेजा जा रहा है...",
+        caseTakingComplete: "केस-टेकिंग पूरी हुई",
+        caseComplete: "केस पूरा हुआ",
+        readyForReview: "समीक्षा के लिए तैयार",
+        back: "वापस",
+        continue: "जारी रखें",
+        finalQuestion: "अंतिम प्रश्न",
+        questionRemaining: "प्रश्न शेष",
+        questionsRemaining: "प्रश्न शेष",
+
+        caseCompleteTitle: "आपके केस की चिकित्सक द्वारा समीक्षा के लिए तैयारी पूरी है",
+        caseCompleteText:
+            "आपके उत्तर एकत्र करके व्यवस्थित कर दिए गए हैं। अब आप अपने केस का सारांश देख सकते हैं और उसे अपने चिकित्सक के साथ साझा कर सकते हैं।",
+        viewCaseSummary: "केस सारांश देखें",
+        caseDisclaimer:
+            "SEHAD रोग का निदान या उपचार निर्धारित नहीं करता। आपके चिकित्सक आपके केस के आधार पर चिकित्सकीय निर्णय लेंगे।",
+            question: "प्रश्न",
+            of: "में से",
+            readyToListen: "सुनने के लिए तैयार",
+            tapMic: "माइक्रोफ़ोन दबाएं और स्वाभाविक रूप से बोलें।",
+            spokenResponsePlaceholder:
+                "आपका बोला हुआ उत्तर यहाँ दिखाई देगा...",
+            listening: "सुन रहा है...",
+            voiceInputUnavailable: "वॉइस इनपुट उपलब्ध नहीं है",
+            voiceInputError: "वॉइस इनपुट में समस्या हुई",
+            responseCaptured: "उत्तर रिकॉर्ड हो गया",
+            reviewResponse: "अपने उत्तर की समीक्षा करें या जारी रखें दबाएं।",
+            pleaseListen: "कृपया अगला प्रश्न सुनें।",
+            sehadSpeaking: "SEHAD बोल रहा है...",
+            voiceUnsupported:
+                "इस ब्राउज़र में वॉइस इनपुट समर्थित नहीं है। आप नीचे दिए गए टेक्स्ट बॉक्स में अपना उत्तर दर्ज कर सकते हैं।",
     },
 
     or: {
@@ -189,7 +275,50 @@ const SEHAD_TRANSLATIONS = {
         reviewed: "ସମୀକ୍ଷା କରାଯାଇଛି",
 
         consultationHistory:
-            "ପରାମର୍ଶ ଇତିହାସ ଆପଣଙ୍କ ଡାକ୍ତରଙ୍କୁ ଆପଣଙ୍କୁ ଭଲଭାବେ ବୁଝିବାରେ ସାହାଯ୍ୟ କରେ।"
+            "ପରାମର୍ଶ ଇତିହାସ ଆପଣଙ୍କ ଡାକ୍ତରଙ୍କୁ ଆପଣଙ୍କୁ ଭଲଭାବେ ବୁଝିବାରେ ସାହାଯ୍ୟ କରେ।",
+        
+                // Case Taking
+        caseTakingTitle: "ଆପଣ କ’ଣ ଅନୁଭବ କରୁଛନ୍ତି, ଆମକୁ କୁହନ୍ତୁ",
+        sehadAsks: "SEHAD ପଚାରୁଛି",
+        initialCaseQuestion: "ଆଜି ଆପଣ କେଉଁ ସମସ୍ୟା ପାଇଁ ଆସିଛନ୍ତି?",
+        caseQuestionHelp:
+            "ଆପଣ ଯେଉଁ ମୁଖ୍ୟ ସ୍ୱାସ୍ଥ୍ୟ ସମସ୍ୟା ବିଷୟରେ ଆଲୋଚନା କରିବାକୁ ଚାହୁଁଛନ୍ତି, ସେ ବିଷୟରେ କୁହନ୍ତୁ।",
+        yourResponse: "ଆପଣଙ୍କ ଉତ୍ତର",
+        clear: "ସଫା କରନ୍ତୁ",
+        responsePlaceholder: "ଏଠାରେ ଆପଣଙ୍କ ଉତ୍ତର ଲେଖନ୍ତୁ...",
+        yourTurn: "ଆପଣଙ୍କ ପାଳି",
+        sehadThinking: "SEHAD ଚିନ୍ତା କରୁଛି...",
+        savingCase: "ଆପଣଙ୍କ କେସ୍ ସଂରକ୍ଷଣ କରାଯାଉଛି...",
+        caseTakingComplete: "କେସ୍-ଟେକିଂ ସମ୍ପୂର୍ଣ୍ଣ",
+        caseComplete: "କେସ୍ ସମ୍ପୂର୍ଣ୍ଣ",
+        readyForReview: "ସମୀକ୍ଷା ପାଇଁ ପ୍ରସ୍ତୁତ",
+        back: "ପଛକୁ",
+        continue: "ଆଗକୁ ବଢ଼ନ୍ତୁ",
+        finalQuestion: "ଶେଷ ପ୍ରଶ୍ନ",
+        questionRemaining: "ପ୍ରଶ୍ନ ବାକି",
+        questionsRemaining: "ପ୍ରଶ୍ନ ବାକି",
+
+        caseCompleteTitle: "ଆପଣଙ୍କ କେସ୍ ଚିକିତ୍ସକଙ୍କ ସମୀକ୍ଷା ପାଇଁ ପ୍ରସ୍ତୁତ",
+        caseCompleteText:
+            "ଆପଣଙ୍କ ଉତ୍ତରଗୁଡ଼ିକ ସଂଗ୍ରହ କରି ସୁବ୍ୟବସ୍ଥିତ କରାଯାଇଛି। ବର୍ତ୍ତମାନ ଆପଣ ନିଜ କେସ୍ ସାରାଂଶ ଦେଖି ଏହାକୁ ନିଜ ଚିକିତ୍ସକଙ୍କ ସହିତ ସେୟାର କରିପାରିବେ।",
+        viewCaseSummary: "କେସ୍ ସାରାଂଶ ଦେଖନ୍ତୁ",
+        caseDisclaimer:
+            "SEHAD ରୋଗ ନିର୍ଣ୍ଣୟ କିମ୍ବା ଚିକିତ୍ସା ନିର୍ଦ୍ଦେଶ ଦିଏ ନାହିଁ। ଆପଣଙ୍କ କେସ୍ ଆଧାରରେ ଆପଣଙ୍କ ଚିକିତ୍ସକ ଚିକିତ୍ସା ସମ୍ପର୍କିତ ନିଷ୍ପତ୍ତି ନେବେ।",
+        question: "ପ୍ରଶ୍ନ",
+        of: "ରୁ",
+        readyToListen: "ଶୁଣିବା ପାଇଁ ପ୍ରସ୍ତୁତ",
+        tapMic: "ମାଇକ୍ରୋଫୋନ୍ ଦବାନ୍ତୁ ଏବଂ ସ୍ୱାଭାବିକ ଭାବରେ କୁହନ୍ତୁ।",
+        spokenResponsePlaceholder:
+            "ଆପଣ କହିଥିବା ଉତ୍ତର ଏଠାରେ ଦେଖାଯିବ...",
+        listening: "ଶୁଣୁଛି...",
+        voiceInputUnavailable: "ଭଏସ୍ ଇନପୁଟ୍ ଉପଲବ୍ଧ ନାହିଁ",
+        voiceInputError: "ଭଏସ୍ ଇନପୁଟ୍‌ରେ ସମସ୍ୟା ହୋଇଛି",
+        responseCaptured: "ଉତ୍ତର ରେକର୍ଡ ହୋଇଛି",
+        reviewResponse: "ଆପଣଙ୍କ ଉତ୍ତର ଯାଞ୍ଚ କରନ୍ତୁ କିମ୍ବା ଆଗକୁ ବଢ଼ନ୍ତୁ ଦବାନ୍ତୁ।",
+        pleaseListen: "ଦୟାକରି ପରବର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଶୁଣନ୍ତୁ।",
+        sehadSpeaking: "SEHAD କହୁଛି...",
+        voiceUnsupported:
+            "ଏହି ବ୍ରାଉଜରରେ ଭଏସ୍ ଇନପୁଟ୍ ସମର୍ଥିତ ନୁହେଁ। ଆପଣ ଉପରେ ଥିବା ଟେକ୍ସଟ୍ ବକ୍ସରେ ନିଜ ଉତ୍ତର ଲେଖିପାରିବେ।",
     }
 };
 

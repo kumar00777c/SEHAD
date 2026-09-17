@@ -8,6 +8,7 @@
     <title>Text Case Taking | SEHAD</title>
 
     <link rel="stylesheet" href="../style.css">
+    <script src="../translations.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                         SEHAD CASE TAKING
                     </span>
 
-                    <h1>
+                    <h1 data-i18n="caseTakingTitle">
                         Tell us what you're experiencing
                     </h1>
                 </div>
@@ -54,15 +55,15 @@
             <!-- Question -->
             <div class="voice-question">
 
-                <span class="question-label">
+                <span class="question-label" data-i18n="sehadAsks">
                     SEHAD ASKS
                 </span>
 
-                <h2 id="caseQuestion">
+                <h2 id="caseQuestion" data-i18n="initialCaseQuestion">
                     What brings you here today?
                 </h2>
 
-                <p>
+                <p data-i18n="caseQuestionHelp">
                     Tell us about the main health concern
                     that you would like to discuss.
                 </p>
@@ -74,19 +75,20 @@
             <div class="transcript-section">
 
                 <div class="transcript-header">
-                    <span>Your response</span>
+                    <span data-i18n="yourResponse">Your response</span>
 
                     <button
                         id="clearResponse"
                         class="clear-button"
                         type="button"
                     >
-                        Clear
+                        <span data-i18n="clear">Clear</span>
                     </button>
                 </div>
 
                 <textarea
                     id="patientResponse"
+                    data-i18n-placeholder="responsePlaceholder"
                     placeholder="Type your response here..."
                     rows="6"
                 ></textarea>
@@ -99,7 +101,7 @@
 
                 <span class="status-dot"></span>
 
-                <span id="statusText">
+                <span id="statusText" data-i18n="yourTurn">
                     Your turn
                 </span>
 
@@ -114,7 +116,7 @@
                     class="secondary-button"
                     type="button"
                 >
-                    ← Back
+                    ← <span data-i18n="back">Back</span> 
                 </button>
 
                 <button
@@ -123,7 +125,7 @@
                     type="button"
                     disabled
                 >
-                    Continue
+                    <span data-i18n="continue">Continue</span>
                     <span>→</span>
                 </button>
 
@@ -132,22 +134,22 @@
             <div id="caseCompletion" class="case-completion" hidden>
     <div class="completion-icon">✓</div>
 
-    <span class="small-label">CASE-TAKING COMPLETE</span>
+    <span class="small-label" data-i18n="caseTakingCompleted">CASE-TAKING COMPLETE</span>
 
-    <h2>You're ready for practitioner review</h2>
+    <h2 data-i18n="caseCompleteTitle">You're ready for practitioner review</h2>
 
-    <p>
+    <p data-i18n="caseCompleteteText">
         Your responses have been collected and organized.
         You can now review your case summary before sharing it
         with your practitioner.
     </p>
 
     <a href="health-summary.html" class="completion-button">
-        View Case Summary
+        <span data-i18n="viewCaseSummary"> View Case Summary </span>
         <span>→</span>
     </a>
 
-    <p class="completion-disclaimer">
+    <p class="completion-disclaimer" data-i18n="caseDisclaimer">
         SEHAD does not diagnose or prescribe treatment.
         Your practitioner will make clinical decisions based on your case.
     </p>
@@ -231,7 +233,7 @@
 
             continueButton.disabled = true;
 
-            statusText.textContent = "Your turn";
+            statusText.textContent = translateSehad("yourTurn");
 
         });
 
@@ -258,7 +260,7 @@
 
 
             statusText.textContent =
-                "SEHAD is thinking...";
+                translateSehad("sehadThinking");
 
 
             /*
@@ -284,7 +286,8 @@
 
                         body: JSON.stringify({
                             patientResponse: responseText,
-                            conversationHistory
+                            conversationHistory,
+                            language: localStorage.getItem("sehad_language") || "en"
                         })
                     }
                 );
@@ -350,15 +353,19 @@ if (!aiData.case_complete && questionCount < MAX_QUESTIONS) {
     questionCount++;
 
     questionNumber.textContent =
-        `Question ${questionCount} of ${MAX_QUESTIONS}`;
+    `${translateSehad("question")} ${questionCount} ${translateSehad("of")} ${MAX_QUESTIONS}`;
 
-    const remainingQuestions =
-        MAX_QUESTIONS - questionCount;
+const remainingQuestions =
+    MAX_QUESTIONS - questionCount;
 
-    progressLabel.textContent =
-        remainingQuestions === 0
-            ? "Final question"
-            : `${remainingQuestions} ${remainingQuestions === 1 ? "question" : "questions"} remaining`;
+progressLabel.textContent =
+    remainingQuestions === 0
+        ? translateSehad("finalQuestion")
+        : `${remainingQuestions} ${
+            remainingQuestions === 1
+                ? translateSehad("questionRemaining")
+                : translateSehad("questionsRemaining")
+        }`;
 
     const progress =
         (questionCount / MAX_QUESTIONS) * 100;
@@ -470,8 +477,7 @@ if (!aiData.case_complete && questionCount < MAX_QUESTIONS) {
 
 
                 statusText.textContent =
-                    "Your turn";
-
+                    translateSehad("yourTurn");
 
             } catch (error) {
 

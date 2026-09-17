@@ -50,8 +50,18 @@ app.post("/api/case/next-question", async (req, res) => {
     try {
         const {
             patientResponse,
-            conversationHistory = []
+            conversationHistory = [],
+            language = "en"
         } = req.body;
+
+        const supportedLanguages = {
+    en: "English",
+    hi: "Hindi",
+    or: "Odia"
+};
+
+const selectedLanguage =
+    supportedLanguages[language] || "English";
 
         if (!patientResponse || !patientResponse.trim()) {
             return res.status(400).json({
@@ -64,6 +74,36 @@ app.post("/api/case/next-question", async (req, res) => {
 
         const systemInstruction = `
 You are SEHAD, an AI-assisted clinical case-taking assistant.
+
+IMPORTANT LANGUAGE RULE:
+
+The patient's selected SEHAD interface language is:
+${selectedLanguage}
+
+LANGUAGE BEHAVIOR:
+- You MUST respond to the patient ONLY in ${selectedLanguage}.
+- The patient's message language does NOT determine your response language.
+- If the patient writes in English, Hindi, Odia, or any other language,
+  you MUST still respond in ${selectedLanguage}.
+- Do NOT automatically switch languages based on the patient's latest message.
+- Keep every patient-facing question in ${selectedLanguage}.
+- The "next_question" field MUST be written in ${selectedLanguage}.
+- The "reason" field MUST also be written in ${selectedLanguage}.
+- Preserve the original meaning of the patient's information while
+  responding in the selected language.
+
+The selected SEHAD language takes priority over the language used in
+individual patient messages.
+
+This includes:
+- next_question
+- reason
+
+The conversation may contain messages in other languages, but your new
+patient-facing response must always use the selected language.
+
+Do not translate medical meaning incorrectly.
+Do not switch back to English unless the selected language is English.
 
 Your job is to collect and organize information provided by the patient
 so that a practitioner can later review the case.

@@ -8,6 +8,7 @@
     <title>Voice Case Taking | SEHAD</title>
 
     <link rel="stylesheet" href="../style.css">
+    <script src="../translations.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
                         SEHAD CASE TAKING
                     </span>
 
-                    <h1>
+                    <h1 data-i18n="caseTakingTitle">
                         Tell us what you're experiencing
                     </h1>
                 </div>
@@ -54,13 +55,13 @@
             <!-- Question -->
             <div class="voice-question">
 
-                <span class="question-label">
+                <span class="question-label" data-i18n="sehadAsks">
                     SEHAD ASKS
                 </span>
 
-                <h2 id="caseQuestion">What brings you here today?</h2>
+                <h2 id="caseQuestion" data-i18n="initialCaseQuestion">What brings you here today?</h2>
 
-                <p>
+                <p data-i18n="caseQuestionHelp">
                     Tell us about the main health concern
                     that you would like to discuss.
                 </p>
@@ -71,7 +72,7 @@
             <!-- Listening Status -->
             <div id="voiceStatus" class="voice-status">
                 <span class="status-dot"></span>
-                <span id="statusText">Ready to listen</span>
+                <span id="statusText" data-i18n="readyToListen">Ready to listen</span>
             </div>
 
 
@@ -86,7 +87,7 @@
             </button>
 
 
-            <p class="mic-instruction" id="micInstruction">
+            <p class="mic-instruction" id="micInstruction" data-i18n="tapMic">
                 Tap the microphone and speak naturally.
             </p>
 
@@ -95,19 +96,20 @@
             <div class="transcript-section">
 
                 <div class="transcript-header">
-                    <span>Your response</span>
+                    <span data-i18n="yourResponse">Your response</span>
 
                     <button
                         id="clearTranscript"
                         class="clear-button"
                         type="button"
                     >
-                        Clear
+                        <span data-i18n="clear">Clear</span>
                     </button>
                 </div>
 
                 <textarea
                     id="transcript"
+                    data-i18n-placeholder="spokenResponsePlaceholder"
                     placeholder="Your spoken response will appear here..."
                     rows="5"
                 ></textarea>
@@ -123,7 +125,7 @@
                     class="secondary-button"
                     type="button"
                 >
-                    ← Back
+                    ← <span data-i18n="back">Back</span>
                 </button>
 
                 <button
@@ -132,7 +134,7 @@
                     type="button"
                     disabled
                 >
-                    Continue
+                    <span data-i18n="continue">Continue</span>
                     <span>→</span>
                 </button>
 
@@ -145,8 +147,8 @@
                 class="browser-message"
                 hidden
             >
-                Voice input is not supported by this browser.
-                You can still enter your response using the text box above.
+                <span data-i18n="voiceUnsupported">Voice input is not supported by this browser.
+                You can still enter your response using the text box above.</span>
             </div>
 
             <div id="caseCompletion" class="case-completion" hidden>
@@ -236,7 +238,7 @@ let questionCount = 1;
 let conversationHistory = [
     {
         role: "SEHAD",
-        content: "What brings you here today?"
+        content: translateSehad("initialCaseQuestion")
     }
 ];
 
@@ -262,9 +264,17 @@ if (!SpeechRecognition) {
 
     recognition = new SpeechRecognition();
 
-    recognition.lang = "en-US";
+    const speechLanguages = {
+    en: "en-US",
+    hi: "hi-IN",
+    or: "or-IN"
+};
+
+    recognition.lang =
+        speechLanguages[getSehadLanguage()] || "en-US";
     recognition.continuous = true;
     recognition.interimResults = true;
+    recognition.maxAlternatives = 5;
 
     recognition.onstart = () => {
 
@@ -478,8 +488,9 @@ continueButton.addEventListener("click", async () => {
                 },
 
                 body: JSON.stringify({
-                    patientResponse,
-                    conversationHistory
+                patientResponse,
+                conversationHistory,
+                language: getSehadLanguage()
                 })
             }
         );
@@ -674,7 +685,14 @@ function speakQuestion(text) {
     const utterance =
         new SpeechSynthesisUtterance(text);
 
-    utterance.lang = "en-US";
+    const speechLanguages = {
+    en: "en-US",
+    hi: "hi-IN",
+    or: "or-IN"
+};
+
+utterance.lang =
+    speechLanguages[getSehadLanguage()] || "en-US";
 
     utterance.rate = 0.95;
 
