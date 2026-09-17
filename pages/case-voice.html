@@ -274,7 +274,7 @@ if (!SpeechRecognition) {
         speechLanguages[getSehadLanguage()] || "en-US";
     recognition.continuous = true;
     recognition.interimResults = true;
-    recognition.maxAlternatives = 5;
+    recognition.maxAlternatives = 1;
 
     recognition.onstart = () => {
 
@@ -390,7 +390,26 @@ micButton.addEventListener("click", () => {
 
         try {
 
-            recognition.start();
+            const speechLanguages = {
+            en: "en-US",
+            hi: "hi-IN",
+            or: "or-IN"
+        };
+
+        recognition.lang =
+            speechLanguages[getSehadLanguage()] || "en-US";
+
+        console.log(
+            "Selected language:",
+            getSehadLanguage()
+        );
+
+        console.log(
+            "Speech recognition language:",
+            recognition.lang
+        );
+
+        recognition.start();
 
         } catch (error) {
 
